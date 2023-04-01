@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Chessboard</title>
+	<style>
+		#chessboard {
+			width: 400px;
+			height: 400px;
+			border: 1px solid black;
+			display: flex;
+			flex-wrap: wrap;
+		}
+
+		.square {
+			width: 50px;
+			height: 50px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 40px;
+			color: white;
+		}
+
+		.square-white {
+			background-color: white;
+		}
+
+		.square-black {
+			background-color: #333;
+		}
+
+		.piece {
+			background-repeat: no-repeat;
+			background-position: center center;
+			background-size: contain;
+		}
+
+		.white-pawn {
+			background-image: url(files/images/pieces/w_p.png);
+		}
+
+		.black-pawn {
+			background-image: url(files/images/pieces/b_p.png);
+		}
+        
+        .white-knight {
+			background-image: url(files/images/pieces/w_n.png);
+		}
+
+		.black-knight {
+			background-image: url(files/images/pieces/b_n.png);
+		}
+        
+        .white-bishop {
+			background-image: url(files/images/pieces/w_b.png);
+		}
+
+		.black-bishop {
+			background-image: url(files/images/pieces/b_b.png);
+		}
+        
+        .white-rook {
+			background-image: url(files/images/pieces/w_r.png);
+		}
+
+		.black-rook {
+			background-image: url(files/images/pieces/b_r.png);
+		} 
+        
+        .white-queen {
+			background-image: url(files/images/pieces/w_q.png);
+		}
+
+		.black-queen {
+			background-image: url(files/images/pieces/b_q.png);
+		}
+        
+        .white-king {
+			background-image: url(files/images/pieces/w_k.png);
+		}
+
+		.black-king {
+			background-image: url(files/images/pieces/b_k.png);
+		}
+
+	</style>
+</head>
+<body>
+	<div id="chessboard"></div>
+
+	<script src="app.js">
+		
+	</script>
+</body>
+</html>
