@@ -16,6 +16,7 @@ const WHITE_PIECES = [
   "white-queen",
   "white-king",
 ];
+
 /**
  * Generate starting board position
  */
@@ -26,20 +27,6 @@ function newGame() {
     var row = Math.floor(i / 8);
     var col = i % 8;
 
-    // // alternate colors for each row
-    // if (row % 2 == 0) {
-    //   if (col % 2 == 0) {
-    //     square.classList.add("square-white");
-    //   } else {
-    //     square.classList.add("square-black");
-    //   }
-    // } else {
-    //   if (col % 2 == 0) {
-    //     square.classList.add("square-black");
-    //   } else {
-    //     square.classList.add("square-white");
-    //   }
-    // }
     var letter = String.fromCharCode(97 + col);
     var number = 8 - row;
     var position = letter + number;
@@ -70,11 +57,15 @@ function newGame() {
     } else if (position == "a8" || position == "h8") {
       square.classList.add("piece", "black-rook");
     }
-
     container.appendChild(square);
   }
 }
-
+// Gets the div number counting from the top left
+function positionToDiv(position) {
+  var file = position[0];
+  var rank = position[1];
+  return file - file.charCodeAt(0) + rank * 8;
+}
 function startGame() {
   var whiteTurn = true;
   var childDivs = document
@@ -107,8 +98,8 @@ function startGame() {
   // Define the dragStart function
   function dragStart(event) {
     console.log("dragigng");
-    var piece = identifyPiece(event.target);
-    var validSquares = getValidSquares(piece);
+    var [piece, position] = identifyPiece(event.target);
+    var validSquares = getValidSquares(piece, position);
   }
 
   // Define the dragEnd function
@@ -118,19 +109,25 @@ function startGame() {
   }
 }
 
-// return the piece that is being dragged
+// return the piece that is being dragged and its position
 function identifyPiece(div) {
   // const PIECES = ["pawn", "knight", "bishop", "rook", "queen", "king"];
   const PIECES = [...WHITE_PIECES, ...BLACK_PIECES];
-  classList = div.className.split(/\s+/);
-  for (piece of PIECES) {
-    if (classList.includes(piece)) {
-      return piece;
+  var classList = div.className.split(/\s+/);
+  var position = classList[1].split("-")[1];
+  let piece;
+  for (let p of PIECES) {
+    if (classList.includes(p)) {
+      piece = p;
     }
   }
+
+  return [piece, position];
 }
 
-function getValidSquares(piece, whiteTurn) {}
+function getValidSquares(piece, position) {
+  console.log(piece, position);
+}
 
 // Setup new Game
 newGame();
