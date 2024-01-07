@@ -1,5 +1,18 @@
 {
+  "name": "esm",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  
   "dependencies": {
     "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "chai": "^5.0.0",
+    "mocha": "^10.2.0"
+  },
+  "scripts": {
+    "test": "mocha chess.spec.js"
   }
 }
