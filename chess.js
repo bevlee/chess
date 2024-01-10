@@ -34,13 +34,12 @@ export function identifyPiece(div) {
   return [piece, position];
 }
 
-const onTheBoard = (x, y) => {
-  return x >= 0 && x <= 7 && y >= 0 && y <= 7;
+export const onTheBoard = (row, col) => {
+  return row >= 0 && row <= 7 && col >= 0 && col <= 7;
 };
 
 //return array of knight moves based on initial position
-export const knightMoves = (row, col, colour, board) => {
-  console.log(board);
+export const knightMoves = (col, row, colour, board) => {
   var moves = [];
   const movement = [
     [-2, -1],
@@ -55,8 +54,8 @@ export const knightMoves = (row, col, colour, board) => {
   var square;
   movement.forEach((it) => {
     square = [
-      parseFloat(row) + parseFloat(it[0]),
-      parseFloat(col) + parseFloat(it[1]),
+      parseFloat(col) + parseFloat(it[0]),
+      parseFloat(row) + parseFloat(it[1]),
     ];
 
     if (onTheBoard(square[0], square[1])) {
@@ -74,36 +73,36 @@ export const knightMoves = (row, col, colour, board) => {
 };
 
 //return array of knight moves based on initial position
-export const pawnMoves = (col, row, colour, board) => {
+export const pawnMoves = (row, col, colour, board) => {
   const direction = colour === "white" ? 1 : -1;
-  var moves = [[col, parseFloat(row) + parseFloat(direction)]];
+
+  var moves = [[parseFloat(row) + parseFloat(direction), col]];
 
   // first move can be 2 squares
   if (row == 1 || row == 6) {
-    moves.push([col, row + 2 * direction]);
+    moves.push([row + 2 * direction, col]);
   }
-  console.log("1st logix" + moves);
+
   // taking pieces with a pawn
   // an opponents piece must exist for the pawn to be able to move diagonally
   if (
-    onTheBoard(col - 1, row + direction) &&
-    board[col - 1][row + direction] !== 0 &&
-    !board[col - 1][row + direction].includes(colour)
+    onTheBoard(row + direction, col - 1) &&
+    board[row + direction][col - 1] !== 0 &&
+    !board[row + direction][col - 1].includes(colour)
   ) {
-    moves.push([col - 1][row + direction]);
+    moves.push([row + direction, col + direction]);
   } else if (
-    onTheBoard(col + 1, row + direction) &&
-    board[col + 1][row + direction] !== 0 &&
-    !board[col + 1][row + direction].includes(colour)
+    onTheBoard(row + direction, col + 1) &&
+    board[row + direction][col + 1] !== 0 &&
+    !board[row + direction][col + 1].includes(colour)
   ) {
-    moves.push([col + 1][row + direction]);
+    moves.push([row + 1, col + direction]);
   }
-  console.log("2st logix" + moves);
   return moves;
 };
 
-//return array of knight moves based on initial position
-export const bishopMoves = (col, row, colour, board) => {
+// return array of bishop moves based on initial position
+export const bishopMoves = (row, col, colour, board) => {
   // need to check diagonal moves in all directions
   var moves = [];
 
@@ -116,7 +115,7 @@ export const bishopMoves = (col, row, colour, board) => {
 
   for (let i = 0; i < 4; i++) {
     // check for pieces in each direction.
-    let [x, y] = [col + directions[i][0], row + directions[i][1]];
+    let [x, y] = [row + directions[i][0], col + directions[i][1]];
 
     // the square must be on the board
     while (x >= 0 && x <= 7 && y >= 0 && y <= 7) {
@@ -131,7 +130,7 @@ export const bishopMoves = (col, row, colour, board) => {
         moves.push([x, y]);
         break;
       }
-      // cehck the next position in that direction
+      // check the next position in that direction
       [x, y] = [x + directions[i][0], y + directions[i][1]];
     }
   }
@@ -139,7 +138,7 @@ export const bishopMoves = (col, row, colour, board) => {
   return moves;
 };
 
-export const rookMoves = (col, row, colour, board) => {
+export const rookMoves = (row, col, colour, board) => {
   var moves = [];
   var directions = [
     [-1, 0],
@@ -149,7 +148,7 @@ export const rookMoves = (col, row, colour, board) => {
   ];
   for (let i = 0; i < 4; i++) {
     // check for pieces in each direction.
-    let [x, y] = [col + directions[i][0], row + directions[i][1]];
+    let [x, y] = [row + directions[i][0], col + directions[i][1]];
 
     // the square must be on the board
     while (x >= 0 && x <= 7 && y >= 0 && y <= 7) {
@@ -171,7 +170,7 @@ export const rookMoves = (col, row, colour, board) => {
   return moves;
 };
 
-export const queenMoves = (col, row, colour, board) => {
+export const queenMoves = (row, col, colour, board) => {
   var moves = [];
   var directions = [
     [-1, 0],
@@ -185,7 +184,7 @@ export const queenMoves = (col, row, colour, board) => {
   ];
   for (let i = 0; i < directions.length; i++) {
     // check for pieces in each direction.
-    let [x, y] = [col + directions[i][0], row + directions[i][1]];
+    let [x, y] = [row + directions[i][0], col + directions[i][1]];
 
     // the square must be on the board
     while (x >= 0 && x <= 7 && y >= 0 && y <= 7) {
@@ -206,7 +205,7 @@ export const queenMoves = (col, row, colour, board) => {
   }
   return moves;
 };
-export const kingMoves = (col, row, colour, board) => {
+export const kingMoves = (row, col, colour, board) => {
   var moves = [];
   var directions = [
     [-1, 0],
@@ -219,7 +218,7 @@ export const kingMoves = (col, row, colour, board) => {
     [1, -1],
   ];
   directions.forEach((dir) => {
-    let [x, y] = [col + dir[0], row + dir[1]];
+    let [x, y] = [row + dir[0], col + dir[1]];
 
     // the square must be on the board
     if (x >= 0 && x <= 7 && y >= 0 && y <= 7) {
@@ -237,35 +236,34 @@ export const kingMoves = (col, row, colour, board) => {
   return moves;
 };
 
-export function getValidSquares(piece, position) {
-  console.log(piece, position);
-  const [col, row] = positionToGrid(position);
+export function getValidSquares(piece, position, CHESS_BOARD) {
+  const [row, col] = positionToGrid(position);
   const colour = piece.includes("white") ? "white" : "black";
   switch (piece.split("-")[1]) {
     case "pawn":
-      return pawnMoves(col, row, colour, CHESS_BOARD);
+      return pawnMoves(row, col, colour, CHESS_BOARD);
     case "knight":
-      return knightMoves(col, row, colour, CHESS_BOARD);
+      return knightMoves(row, col, colour, CHESS_BOARD);
     case "bishop":
-      return bishopMoves(col, row, colour, CHESS_BOARD);
+      return bishopMoves(row, col, colour, CHESS_BOARD);
     case "rook":
-      return rookMoves(col, row, colour, CHESS_BOARD);
+      return rookMoves(row, col, colour, CHESS_BOARD);
     case "queen":
-      return queenMoves(col, row, colour, CHESS_BOARD);
+      return queenMoves(row, col, colour, CHESS_BOARD);
     case "king":
-      return kingMoves(col, row, colour, CHESS_BOARD);
+      return kingMoves(row, col, colour, CHESS_BOARD);
   }
 }
+
 // gets a position e.g e2 and returns the coordinates in an array.
 export const positionToGrid = (position) => {
   const col = position.charCodeAt(0) - 97;
   const row = position.charAt(1) - 1;
-  return [col, row];
+  return [row, col];
 };
 
 //turns grid coords to a chess position ie. e4, c8
 export const gridToPosition = ([x, y]) => {
-  const col = String.fromCharCode(x + 97);
-  console.log("return is " + col + (y + 1));
-  return col + (y + 1);
+  const col = String.fromCharCode(y + 97);
+  return col + (x + 1);
 };

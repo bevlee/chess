@@ -145,7 +145,7 @@ function startGame() {
   // Define the dragStart function
   function dragStart(event) {
     var [piece, position] = identifyPiece(event.target);
-    // var validSquares = getValidSquares(piece, position);
+    // var validSquares = getValidSquares(piece, position, CHESS_BOARD);
     // console.log(validSquares);
   }
 
@@ -158,8 +158,8 @@ function startGame() {
 
   const deselect = (event) => {
     var [piece, position] = identifyPiece(event.target);
-    var validSquares = getValidSquares(piece, position);
-
+    var validSquares = getValidSquares(piece, position, CHESS_BOARD);
+    var validSquareElement;
     validSquares.forEach((square) => {
       validSquareElement = document.getElementsByClassName(
         `square-${gridToPosition(square)}`
@@ -174,7 +174,7 @@ function startGame() {
   function onClick(event) {
     // Remove any styles added during dragging
     var [piece, position] = identifyPiece(event.target);
-    var validSquares = getValidSquares(piece, position);
+    var validSquares = getValidSquares(piece, position, CHESS_BOARD);
     console.log(validSquares);
     var validSquareElement;
     validSquares.forEach((square) => {
