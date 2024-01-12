@@ -90,13 +90,14 @@ export const pawnMoves = (row, col, colour, board) => {
     board[row + direction][col - 1] !== 0 &&
     !board[row + direction][col - 1].includes(colour)
   ) {
-    moves.push([row + direction, col + direction]);
-  } else if (
+    moves.push([row + direction, col - 1]);
+  }
+  if (
     onTheBoard(row + direction, col + 1) &&
     board[row + direction][col + 1] !== 0 &&
     !board[row + direction][col + 1].includes(colour)
   ) {
-    moves.push([row + 1, col + direction]);
+    moves.push([row + direction, col + 1]);
   }
   return moves;
 };
@@ -195,7 +196,7 @@ export const queenMoves = (row, col, colour, board) => {
         // if its the same colour as the selected piece, then the rook cannot move there
         break;
       } else {
-        // then there is a poiece belonging to the opponeng so the rook can move there
+        // then there is a piece belonging to the opponeng so the rook can move there
         moves.push([x, y]);
         break;
       }
@@ -205,6 +206,7 @@ export const queenMoves = (row, col, colour, board) => {
   }
   return moves;
 };
+
 export const kingMoves = (row, col, colour, board) => {
   var moves = [];
   var directions = [

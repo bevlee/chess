@@ -145,5 +145,43 @@ describe("valid pieces moving", () => {
         [4, 7],
       ]);
     });
+
+    describe("should allow a white piece to take opponent pieces", () => {
+      const customBoard = [
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, "white-pawn", 0, 0, 0, 0, 0, 0],
+        ["black-knight", 0, "black-queen", 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+      ];
+      const validMoves = pawnMoves(2, 1, "white", customBoard);
+      console.log(validMoves);
+      expect(validMoves).to.deep.equal([
+        [3, 1],
+        [3, 0],
+        [3, 2],
+      ]);
+    });
+    describe("should allow a black piece to take opponent pieces", () => {
+      const customBoard = [
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, "white-pawn", 0, 0, 0],
+        ["black-knight", 0, 0, 0, 0, "black-pawn", 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+      ];
+      const validMoves = pawnMoves(3, 5, "black", customBoard);
+      console.log(validMoves);
+      expect(validMoves).to.deep.equal([
+        [2, 5],
+        [2, 4],
+      ]);
+    });
   });
 });
