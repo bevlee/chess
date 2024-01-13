@@ -7,6 +7,11 @@ import {
   gridToPosition,
   onTheBoard,
   pawnMoves,
+  knightMoves,
+  bishopMoves,
+  queenMoves,
+  kingMoves,
+  rookMoves,
 } from "./chess.js";
 
 const DEFAULT_CHESS_BOARD = [
@@ -96,6 +101,7 @@ describe("convert chess position into grid form", () => {
     expect(gridToPosition([4, 4])).to.equal("e5");
   });
 });
+
 describe("valid pieces moving", () => {
   describe("pawn moving", () => {
     describe("should return correct moves for an unmoved white a pawn", () => {
@@ -107,7 +113,6 @@ describe("valid pieces moving", () => {
     });
     describe("should return correct moves for an unmoved white f pawn", () => {
       const validMoves = pawnMoves(1, 6, "white", DEFAULT_CHESS_BOARD);
-      console.log(validMoves);
       expect(validMoves).to.deep.equal([
         [2, 6],
         [3, 6],
@@ -115,7 +120,6 @@ describe("valid pieces moving", () => {
     });
     describe("should return correct moves for an unmoved white h pawn", () => {
       const validMoves = pawnMoves(1, 8, "white", DEFAULT_CHESS_BOARD);
-      console.log(validMoves);
       expect(validMoves).to.deep.equal([
         [2, 8],
         [3, 8],
@@ -131,7 +135,6 @@ describe("valid pieces moving", () => {
     });
     describe("should return correct moves for an unmoved black f pawn", () => {
       const validMoves = pawnMoves(6, 6, "black", DEFAULT_CHESS_BOARD);
-      console.log(validMoves);
       expect(validMoves).to.deep.equal([
         [5, 6],
         [4, 6],
@@ -139,7 +142,6 @@ describe("valid pieces moving", () => {
     });
     describe("should return correct moves for an unmoved black h pawn", () => {
       const validMoves = pawnMoves(6, 7, "black", DEFAULT_CHESS_BOARD);
-      console.log(validMoves);
       expect(validMoves).to.deep.equal([
         [5, 7],
         [4, 7],
@@ -158,7 +160,6 @@ describe("valid pieces moving", () => {
         [0, 0, 0, 0, 0, 0, 0, 0],
       ];
       const validMoves = pawnMoves(2, 1, "white", customBoard);
-      console.log(validMoves);
       expect(validMoves).to.deep.equal([
         [3, 1],
         [3, 0],
@@ -177,11 +178,101 @@ describe("valid pieces moving", () => {
         [0, 0, 0, 0, 0, 0, 0, 0],
       ];
       const validMoves = pawnMoves(3, 5, "black", customBoard);
-      console.log(validMoves);
       expect(validMoves).to.deep.equal([
         [2, 5],
         [2, 4],
       ]);
+    });
+  });
+
+  describe("the knight", () => {
+    describe("moves from the starting position", () => {
+      it("white b knight", () => {
+        const validMoves = knightMoves(0, 1, "white", DEFAULT_CHESS_BOARD);
+        expect(validMoves).to.deep.equal([
+          [2, 0],
+          [2, 2],
+        ]);
+      });
+      it("black f knight", () => {
+        const validMoves = knightMoves(7, 6, "black", DEFAULT_CHESS_BOARD);
+        expect(validMoves).to.deep.equal([
+          [5, 5],
+          [5, 7],
+        ]);
+      });
+    });
+    describe("other moves", () => {
+      it("white knight from c4", () => {
+        const customBoard = [
+          [0, 0, 0, 0, 0, 0, 0, 0],
+          [
+            "white-pawn",
+            "white-pawn",
+            "white-pawn",
+            "white-pawn",
+            "white-pawn",
+            "white-pawn",
+            "white-pawn",
+            "white-pawn",
+          ],
+          [0, 0, 0, 0, 0, 0, 0, 0],
+          ["black-knight", 0, "white-knight", 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0, 0, 0],
+        ];
+        const validMoves = knightMoves(3, 2, "white", customBoard);
+        expect(validMoves).to.deep.equal([
+          [2, 0],
+          [2, 4],
+          [4, 0],
+          [4, 4],
+          [5, 1],
+          [5, 3],
+        ]);
+      });
+      it("black f knight", () => {
+        const customBoard = [
+          [0, 0, 0, 0, 0, 0, 0, 0],
+          [
+            "white-pawn",
+            "white-pawn",
+            "white-pawn",
+            "white-pawn",
+            "white-pawn",
+            "white-pawn",
+            "white-pawn",
+            "white-pawn",
+          ],
+          [0, 0, 0, 0, 0, 0, 0, 0],
+          ["black-queen", 0, , 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, "black-knight", 0, 0],
+          [0, 0, 0, 0, 0, 0, 0, 0],
+          [
+            "black-pawn",
+            "black-pawn",
+            "black-pawn",
+            "black-pawn",
+            "black-pawn",
+            "black-pawn",
+            0,
+            "black-pawn",
+          ],
+          [0, 0, 0, 0, 0, 0, 0, 0],
+        ];
+        const validMoves = knightMoves(4, 5, "black", customBoard);
+        expect(validMoves).to.deep.equal([
+          [2, 4],
+          [2, 6],
+          [3, 3],
+          [3, 7],
+          [5, 3],
+          [5, 7],
+          [6, 6],
+        ]);
+      });
     });
   });
 });

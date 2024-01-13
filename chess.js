@@ -39,7 +39,7 @@ export const onTheBoard = (row, col) => {
 };
 
 //return array of knight moves based on initial position
-export const knightMoves = (col, row, colour, board) => {
+export const knightMoves = (row, col, colour, board) => {
   var moves = [];
   const movement = [
     [-2, -1],
@@ -54,8 +54,8 @@ export const knightMoves = (col, row, colour, board) => {
   var square;
   movement.forEach((it) => {
     square = [
-      parseFloat(col) + parseFloat(it[0]),
-      parseFloat(row) + parseFloat(it[1]),
+      parseFloat(row) + parseFloat(it[0]),
+      parseFloat(col) + parseFloat(it[1]),
     ];
 
     if (onTheBoard(square[0], square[1])) {
