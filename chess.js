@@ -127,7 +127,7 @@ export const bishopMoves = (row, col, colour, board) => {
         // if its the same colour as the selected piece, then the bishop cannot move there
         break;
       } else {
-        // then there is a poiece belonging to the opponeng so the bishop can move there
+        // then there is a piece belonging to the opponeng so the bishop can move there
         moves.push([x, y]);
         break;
       }

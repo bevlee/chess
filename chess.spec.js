@@ -275,4 +275,83 @@ describe("valid pieces moving", () => {
       });
     });
   });
+  describe("the bishop", () => {
+    describe("moves from the starting position", () => {
+      it("white b bishop", () => {
+        const validMoves = bishopMoves(0, 2, "white", DEFAULT_CHESS_BOARD);
+        expect(validMoves).to.deep.equal([]);
+      });
+      it("black f bishop", () => {
+        const validMoves = bishopMoves(7, 5, "black", DEFAULT_CHESS_BOARD);
+        expect(validMoves).to.deep.equal([]);
+      });
+    });
+    describe("other moves", () => {
+      it("white bishop from c4", () => {
+        const customBoard = [
+          [0, 0, 0, 0, 0, 0, 0, 0],
+          [
+            "white-pawn",
+            "white-pawn",
+            "white-pawn",
+            "white-pawn",
+            0,
+            "white-pawn",
+            "white-pawn",
+            "white-pawn",
+          ],
+          ["black-knight", 0, 0, 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, "white-bishop", 0, 0, 0],
+          [0, 0, 0, 0, 0, 0, 0, 0],
+          ["white-knight", 0, 0, 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0, 0, "white-queen"],
+        ];
+        const validMoves = bishopMoves(3, 2, "white", customBoard);
+        expect(validMoves).to.have.deep.members([
+          [0, 5],
+          [1, 4],
+          [2, 3],
+          [2, 1],
+          [4, 1],
+          [4, 3],
+          [5, 4],
+          [6, 5],
+          [7, 6],
+        ]);
+      });
+      it("black bishop on f5", () => {
+        const customBoard = [
+          [0, 0, 0, 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, "black-bishop", 0, 0],
+          [0, 0, 0, 0, 0, 0, 0, 0],
+          [
+            "black-pawn",
+            "black-pawn",
+            "black-pawn",
+            "black-pawn",
+            "black-pawn",
+            "black-pawn",
+            0,
+            "black-pawn",
+          ],
+          [0, 0, 0, 0, 0, 0, 0, 0],
+        ];
+        const validMoves = bishopMoves(4, 5, "black", customBoard);
+        expect(validMoves).to.have.deep.members([
+          [0, 1],
+          [1, 2],
+          [2, 3],
+          [3, 4],
+          [2, 7],
+          [3, 6],
+          [5, 6],
+          [5, 4],
+        ]);
+      });
+    });
+  });
 });
